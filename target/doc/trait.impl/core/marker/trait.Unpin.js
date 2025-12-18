@@ -1,0 +1,9 @@
+(function() {
+    var implementors = Object.fromEntries([["mine",[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.90.0/core/marker/trait.Unpin.html\" title=\"trait core::marker::Unpin\">Unpin</a> for <a class=\"enum\" href=\"mine/cells/enum.CellType.html\" title=\"enum mine::cells::CellType\">CellType</a>",1,["mine::cells::CellType"]],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.90.0/core/marker/trait.Unpin.html\" title=\"trait core::marker::Unpin\">Unpin</a> for <a class=\"enum\" href=\"mine/cells/enum.Status.html\" title=\"enum mine::cells::Status\">Status</a>",1,["mine::cells::Status"]],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.90.0/core/marker/trait.Unpin.html\" title=\"trait core::marker::Unpin\">Unpin</a> for <a class=\"struct\" href=\"mine/cells/struct.Cell.html\" title=\"struct mine::cells::Cell\">Cell</a>",1,["mine::cells::Cell"]],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.90.0/core/marker/trait.Unpin.html\" title=\"trait core::marker::Unpin\">Unpin</a> for <a class=\"struct\" href=\"mine/game_play/struct.Board.html\" title=\"struct mine::game_play::Board\">Board</a>",1,["mine::game_play::Board"]],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.90.0/core/marker/trait.Unpin.html\" title=\"trait core::marker::Unpin\">Unpin</a> for <a class=\"struct\" href=\"mine/gui/enabled/struct.App.html\" title=\"struct mine::gui::enabled::App\">App</a>",1,["mine::gui::enabled::App"]]]]]);
+    if (window.register_implementors) {
+        window.register_implementors(implementors);
+    } else {
+        window.pending_implementors = implementors;
+    }
+})()
+//{"start":57,"fragment_lengths":[1424]}
