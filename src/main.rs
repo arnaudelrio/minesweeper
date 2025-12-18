@@ -5,7 +5,7 @@
 //! This particular program can run as a _cli_, as a _tui_ or as a _gui_.
 
 /// Function to recieve the args from the cli.
-use std::env::{self, args};
+use std::env;
 
 mod cells;
 mod cli;
@@ -26,13 +26,12 @@ use crate::game_play::Board;
 /// * **tui**: `cargo run --features mine_tui -- tui`
 /// * **gui**: `trunk serve`
 fn main() {
-    for arg in args() {
-        match arg.as_str() {
-            "cli" => start_cli(),
-            "tui" => start_tui(),
-            "gui" => start_gui(),
-            _ => continue,
-        }
+    let args: Vec<String> = env::args().collect();
+    match args[1].as_str() {
+        "cli" => start_cli(),
+        "tui" => start_tui(),
+        "gui" => start_gui(),
+        _ => start_cli(),
     }
 }
 
