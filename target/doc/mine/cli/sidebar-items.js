@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["print_board_console","run"]};
+window.SIDEBAR_ITEMS = {"fn":["print_board_console","run_cli"]};

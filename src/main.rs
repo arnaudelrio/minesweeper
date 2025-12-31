@@ -13,8 +13,8 @@ mod game_play;
 mod gui;
 mod tui;
 
-use cli::run;
-use gui::run_app;
+use cli::run_cli;
+use gui::run_gui;
 use tui::run_tui;
 
 use crate::game_play::Board;
@@ -83,7 +83,7 @@ fn cli_args() -> (usize, usize, Vec<(usize, usize)>) {
 /// Starts the command line interface
 fn start_cli() {
     let (rows, cols, bomb_coords) = cli_args();
-    run(rows, cols, bomb_coords);
+    run_cli(rows, cols, bomb_coords);
 }
 
 /// Starts the terminal user interface
@@ -94,5 +94,5 @@ fn start_tui() {
 
 /// Starts the graphical user interface
 fn start_gui() {
-    run_app();
+    run_gui();
 }

@@ -58,74 +58,66 @@
 <a href=#58 id=58 data-nosnippet>58</a><span class="doccomment">/// A single board cell.
 <a href=#59 id=59 data-nosnippet>59</a></span><span class="attr">#[derive(Clone, Copy)]
 <a href=#60 id=60 data-nosnippet>60</a></span><span class="kw">pub struct </span>Cell {
-<a href=#61 id=61 data-nosnippet>61</a>    <span class="kw">pub </span>cell_type: CellType,
-<a href=#62 id=62 data-nosnippet>62</a>    <span class="kw">pub </span>status: Status,
-<a href=#63 id=63 data-nosnippet>63</a>}
-<a href=#64 id=64 data-nosnippet>64</a>
-<a href=#65 id=65 data-nosnippet>65</a><span class="kw">impl </span>Cell {
-<a href=#66 id=66 data-nosnippet>66</a>    <span class="doccomment">/// Convenience constructor for a hidden numbered cell.
-<a href=#67 id=67 data-nosnippet>67</a>    </span><span class="kw">pub fn </span>new_number(n: i32) -&gt; Cell {
-<a href=#68 id=68 data-nosnippet>68</a>        Cell {
-<a href=#69 id=69 data-nosnippet>69</a>            cell_type: CellType::Number(n),
-<a href=#70 id=70 data-nosnippet>70</a>            status: Status::Hidden,
-<a href=#71 id=71 data-nosnippet>71</a>        }
-<a href=#72 id=72 data-nosnippet>72</a>    }
-<a href=#73 id=73 data-nosnippet>73</a>
-<a href=#74 id=74 data-nosnippet>74</a>    <span class="doccomment">/// Convenience constructor for a hidden bomb cell.
-<a href=#75 id=75 data-nosnippet>75</a>    </span><span class="kw">pub fn </span>new_bomb() -&gt; Cell {
-<a href=#76 id=76 data-nosnippet>76</a>        Cell {
-<a href=#77 id=77 data-nosnippet>77</a>            cell_type: CellType::Bomb,
-<a href=#78 id=78 data-nosnippet>78</a>            status: Status::Hidden,
-<a href=#79 id=79 data-nosnippet>79</a>        }
-<a href=#80 id=80 data-nosnippet>80</a>    }
-<a href=#81 id=81 data-nosnippet>81</a>
-<a href=#82 id=82 data-nosnippet>82</a>    <span class="doccomment">/// Toggle status in the `Hidden -&gt; Flag -&gt; Question -&gt; Hidden` cycle.
-<a href=#83 id=83 data-nosnippet>83</a>    ///
-<a href=#84 id=84 data-nosnippet>84</a>    /// Revealed cells remain revealed.
-<a href=#85 id=85 data-nosnippet>85</a>    </span><span class="kw">pub fn </span>cycle_status(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-<a href=#86 id=86 data-nosnippet>86</a>        <span class="self">self</span>.status = <span class="self">self</span>.status.cycle();
-<a href=#87 id=87 data-nosnippet>87</a>    }
-<a href=#88 id=88 data-nosnippet>88</a>
-<a href=#89 id=89 data-nosnippet>89</a>    <span class="doccomment">/// Reveal the cell. The status will be set to [`Status::Revealed`].
-<a href=#90 id=90 data-nosnippet>90</a>    ///
-<a href=#91 id=91 data-nosnippet>91</a>    /// Returns the underlying [`CellType`].
-<a href=#92 id=92 data-nosnippet>92</a>    </span><span class="kw">pub fn </span>reveal(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; CellType {
-<a href=#93 id=93 data-nosnippet>93</a>        <span class="self">self</span>.status = Status::Revealed;
-<a href=#94 id=94 data-nosnippet>94</a>        <span class="self">self</span>.cell_type
-<a href=#95 id=95 data-nosnippet>95</a>    }
-<a href=#96 id=96 data-nosnippet>96</a>
-<a href=#97 id=97 data-nosnippet>97</a>    <span class="doccomment">/// Return true if the cell is [`Status::Flag`].
-<a href=#98 id=98 data-nosnippet>98</a>    </span><span class="kw">pub fn </span>is_flagged(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-<a href=#99 id=99 data-nosnippet>99</a>        <span class="self">self</span>.status == Status::Flag
-<a href=#100 id=100 data-nosnippet>100</a>    }
-<a href=#101 id=101 data-nosnippet>101</a>
-<a href=#102 id=102 data-nosnippet>102</a>    <span class="doccomment">/// Return true if the cell is [`Status::Question`].
-<a href=#103 id=103 data-nosnippet>103</a>    </span><span class="kw">pub fn </span>is_question(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-<a href=#104 id=104 data-nosnippet>104</a>        <span class="self">self</span>.status == Status::Question
-<a href=#105 id=105 data-nosnippet>105</a>    }
-<a href=#106 id=106 data-nosnippet>106</a>
-<a href=#107 id=107 data-nosnippet>107</a>    <span class="doccomment">/// Return true if the cell is [`Status::Revealed`].
-<a href=#108 id=108 data-nosnippet>108</a>    </span><span class="kw">pub fn </span>is_revealed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-<a href=#109 id=109 data-nosnippet>109</a>        <span class="self">self</span>.status == Status::Revealed
-<a href=#110 id=110 data-nosnippet>110</a>    }
-<a href=#111 id=111 data-nosnippet>111</a>
-<a href=#112 id=112 data-nosnippet>112</a>    <span class="doccomment">/// Return true if the underlying type is a [`CellType::Bomb`].
-<a href=#113 id=113 data-nosnippet>113</a>    </span><span class="kw">pub fn </span>is_bomb(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-<a href=#114 id=114 data-nosnippet>114</a>        <span class="self">self</span>.cell_type.is_bomb()
-<a href=#115 id=115 data-nosnippet>115</a>    }
-<a href=#116 id=116 data-nosnippet>116</a>
-<a href=#117 id=117 data-nosnippet>117</a>    <span class="doccomment">/// If this is a number cell, return its value.
-<a href=#118 id=118 data-nosnippet>118</a>    </span><span class="kw">pub fn </span>number_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;i32&gt; {
-<a href=#119 id=119 data-nosnippet>119</a>        <span class="self">self</span>.cell_type.number()
-<a href=#120 id=120 data-nosnippet>120</a>    }
-<a href=#121 id=121 data-nosnippet>121</a>}
-<a href=#122 id=122 data-nosnippet>122</a>
-<a href=#123 id=123 data-nosnippet>123</a><span class="comment">/*impl fmt::Debug for Cell {
-<a href=#124 id=124 data-nosnippet>124</a>    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
-<a href=#125 id=125 data-nosnippet>125</a>        f.debug_struct("Cell")
-<a href=#126 id=126 data-nosnippet>126</a>            .field("cell_type", &amp;self.cell_type)
-<a href=#127 id=127 data-nosnippet>127</a>            .field("status", &amp;self.status)
-<a href=#128 id=128 data-nosnippet>128</a>            .finish()
-<a href=#129 id=129 data-nosnippet>129</a>    }
-<a href=#130 id=130 data-nosnippet>130</a>}
-<a href=#131 id=131 data-nosnippet>131</a>*/</span></code></pre></div></section></main></body></html>
+<a href=#61 id=61 data-nosnippet>61</a>    <span class="doccomment">/// The type of cell. Can be a [`CellType::Number`] or [`CellType::Bomb`].
+<a href=#62 id=62 data-nosnippet>62</a>    </span><span class="kw">pub </span>cell_type: CellType,
+<a href=#63 id=63 data-nosnippet>63</a>    <span class="doccomment">/// The status of the cell. Can be [`Status::Hidden`], [`Status::Flag`], [`Status::Question`], or [`Status::Revealed`].
+<a href=#64 id=64 data-nosnippet>64</a>    </span><span class="kw">pub </span>status: Status,
+<a href=#65 id=65 data-nosnippet>65</a>}
+<a href=#66 id=66 data-nosnippet>66</a>
+<a href=#67 id=67 data-nosnippet>67</a><span class="kw">impl </span>Cell {
+<a href=#68 id=68 data-nosnippet>68</a>    <span class="doccomment">/// Convenience constructor for a hidden numbered cell.
+<a href=#69 id=69 data-nosnippet>69</a>    </span><span class="kw">pub fn </span>new_number(n: i32) -&gt; Cell {
+<a href=#70 id=70 data-nosnippet>70</a>        Cell {
+<a href=#71 id=71 data-nosnippet>71</a>            cell_type: CellType::Number(n),
+<a href=#72 id=72 data-nosnippet>72</a>            status: Status::Hidden,
+<a href=#73 id=73 data-nosnippet>73</a>        }
+<a href=#74 id=74 data-nosnippet>74</a>    }
+<a href=#75 id=75 data-nosnippet>75</a>
+<a href=#76 id=76 data-nosnippet>76</a>    <span class="doccomment">/// Convenience constructor for a hidden bomb cell.
+<a href=#77 id=77 data-nosnippet>77</a>    </span><span class="kw">pub fn </span>new_bomb() -&gt; Cell {
+<a href=#78 id=78 data-nosnippet>78</a>        Cell {
+<a href=#79 id=79 data-nosnippet>79</a>            cell_type: CellType::Bomb,
+<a href=#80 id=80 data-nosnippet>80</a>            status: Status::Hidden,
+<a href=#81 id=81 data-nosnippet>81</a>        }
+<a href=#82 id=82 data-nosnippet>82</a>    }
+<a href=#83 id=83 data-nosnippet>83</a>
+<a href=#84 id=84 data-nosnippet>84</a>    <span class="doccomment">/// Toggle status in the `Hidden -&gt; Flag -&gt; Question -&gt; Hidden` cycle.
+<a href=#85 id=85 data-nosnippet>85</a>    ///
+<a href=#86 id=86 data-nosnippet>86</a>    /// Revealed cells remain revealed.
+<a href=#87 id=87 data-nosnippet>87</a>    </span><span class="kw">pub fn </span>cycle_status(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+<a href=#88 id=88 data-nosnippet>88</a>        <span class="self">self</span>.status = <span class="self">self</span>.status.cycle();
+<a href=#89 id=89 data-nosnippet>89</a>    }
+<a href=#90 id=90 data-nosnippet>90</a>
+<a href=#91 id=91 data-nosnippet>91</a>    <span class="doccomment">/// Reveal the cell. The status will be set to [`Status::Revealed`].
+<a href=#92 id=92 data-nosnippet>92</a>    ///
+<a href=#93 id=93 data-nosnippet>93</a>    /// Returns the underlying [`CellType`].
+<a href=#94 id=94 data-nosnippet>94</a>    </span><span class="kw">pub fn </span>reveal(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; CellType {
+<a href=#95 id=95 data-nosnippet>95</a>        <span class="self">self</span>.status = Status::Revealed;
+<a href=#96 id=96 data-nosnippet>96</a>        <span class="self">self</span>.cell_type
+<a href=#97 id=97 data-nosnippet>97</a>    }
+<a href=#98 id=98 data-nosnippet>98</a>
+<a href=#99 id=99 data-nosnippet>99</a>    <span class="doccomment">/// Return true if the cell is [`Status::Flag`].
+<a href=#100 id=100 data-nosnippet>100</a>    </span><span class="kw">pub fn </span>is_flagged(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+<a href=#101 id=101 data-nosnippet>101</a>        <span class="self">self</span>.status == Status::Flag
+<a href=#102 id=102 data-nosnippet>102</a>    }
+<a href=#103 id=103 data-nosnippet>103</a>
+<a href=#104 id=104 data-nosnippet>104</a>    <span class="doccomment">/// Return true if the cell is [`Status::Question`].
+<a href=#105 id=105 data-nosnippet>105</a>    </span><span class="kw">pub fn </span>is_question(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+<a href=#106 id=106 data-nosnippet>106</a>        <span class="self">self</span>.status == Status::Question
+<a href=#107 id=107 data-nosnippet>107</a>    }
+<a href=#108 id=108 data-nosnippet>108</a>
+<a href=#109 id=109 data-nosnippet>109</a>    <span class="doccomment">/// Return true if the cell is [`Status::Revealed`].
+<a href=#110 id=110 data-nosnippet>110</a>    </span><span class="kw">pub fn </span>is_revealed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+<a href=#111 id=111 data-nosnippet>111</a>        <span class="self">self</span>.status == Status::Revealed
+<a href=#112 id=112 data-nosnippet>112</a>    }
+<a href=#113 id=113 data-nosnippet>113</a>
+<a href=#114 id=114 data-nosnippet>114</a>    <span class="doccomment">/// Return true if the underlying type is a [`CellType::Bomb`].
+<a href=#115 id=115 data-nosnippet>115</a>    </span><span class="kw">pub fn </span>is_bomb(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+<a href=#116 id=116 data-nosnippet>116</a>        <span class="self">self</span>.cell_type.is_bomb()
+<a href=#117 id=117 data-nosnippet>117</a>    }
+<a href=#118 id=118 data-nosnippet>118</a>
+<a href=#119 id=119 data-nosnippet>119</a>    <span class="doccomment">/// If this is a number cell, return its value.
+<a href=#120 id=120 data-nosnippet>120</a>    </span><span class="kw">pub fn </span>number_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;i32&gt; {
+<a href=#121 id=121 data-nosnippet>121</a>        <span class="self">self</span>.cell_type.number()
+<a href=#122 id=122 data-nosnippet>122</a>    }
+<a href=#123 id=123 data-nosnippet>123</a>}</code></pre></div></section></main></body></html>

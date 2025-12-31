@@ -1,6 +1,6 @@
 //! Cli module of the minesweeper game.
 //!
-//! This module exposes [`run()`] which starts a minimal interactive REPL that accepts commands to reveal and flag cells. It's intentionally small and avoids any external dependencies so it can be used as a starting point for both tests and integration with other frontends.
+//! This module exposes [`run_cli()`] which starts a minimal interactive REPL that accepts commands to reveal and flag cells. It's intentionally small and avoids any external dependencies so it can be used as a starting point for both tests and integration with other frontends.
 
 use std::io::{self, Write};
 
@@ -16,7 +16,7 @@ use crate::game_play::Board;
 /// - `flag x y`: Flag the cell at position (x, y).
 /// - `help`: Display a list of available commands.
 /// - `quit`: Quit the game.
-pub fn run(rows: usize, cols: usize, bomb_coords: Vec<(usize, usize)>) {
+pub fn run_cli(rows: usize, cols: usize, bomb_coords: Vec<(usize, usize)>) {
     let mut board = Board::from_bomb_coords((rows, cols), &bomb_coords);
 
     println!("Minesweeper CLI");

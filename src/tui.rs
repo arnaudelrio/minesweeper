@@ -65,27 +65,30 @@ mod enabled {
                         let idx = r * cols + c;
                         let cell = &board.board[idx];
 
-                        let ch = match cell.status {
-                            Status::Hidden => '.',
-                            Status::Flag => 'F',
-                            Status::Question => '?',
+                        let (ch, color) = match cell.status {
+                            Status::Hidden => ('.', Color::White),
+                            Status::Flag => ('F', Color::Red),
+                            Status::Question => ('?', Color::Yellow),
                             Status::Revealed => match cell.cell_type {
-                                CellType::Bomb => 'B',
-                                CellType::Number(0) => ' ',
+                                CellType::Bomb => ('B', Color::Red),
+                                CellType::Number(0) => (' ', Color::White),
                                 CellType::Number(n) if (1..=9).contains(&n) => {
-                                    std::char::from_digit(n as u32, 10).unwrap_or('#')
+                                    (std::char::from_digit(n as u32, 10).unwrap_or('#'), Color::White)
                                 }
-                                CellType::Number(_) => '#',
+                                CellType::Number(_) => ('#', Color::Red),
                             },
                         };
 
                         if r == cursor_r && c == cursor_c {
                             spans.push(Span::styled(
                                 format!("{} ", ch),
-                                Style::default().fg(Color::Black).bg(Color::Yellow).add_modifier(Modifier::BOLD),
+                                Style::default().fg(color).bg(Color::Yellow).add_modifier(Modifier::BOLD),
                             ));
                         } else {
-                            spans.push(Span::raw(format!("{} ", ch)));
+                            spans.push(Span::styled(
+                                format!("{} ", ch),
+                                Style::default().fg(color),
+                            ));
                         }
                     }
                     lines.push(Spans::from(spans));

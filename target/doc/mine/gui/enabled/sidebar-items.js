@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["run_app"],"struct":["App"]};
+window.SIDEBAR_ITEMS = {"fn":["run_gui"],"struct":["App"]};

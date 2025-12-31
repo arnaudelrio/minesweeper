@@ -243,22 +243,22 @@ mod enabled {
     }
 
     /// Bootstrap function called when the WASM module is instantiated.
-    /// 
+    ///
     /// This mounts the Yew `App` component onto the document body.
-    /// 
+    ///
     /// Use `wasm-bindgen` to export the start function so it runs automatically.
     #[wasm_bindgen(start)]
-    pub fn run_app() {
+    pub fn run_gui() {
         yew::Renderer::<App>::new().render();
     }
 }
 
 /// This provides the actual `run_app` function publicly when the `mine_gui` feature is enabled.
 #[cfg(feature = "mine_gui")]
-pub use enabled::run_app;
+pub use enabled::run_gui;
 
 /// This is a placeholder function for the code to compile even if the `mine_gui` feature is not enabled.
 #[cfg(not(feature = "mine_gui"))]
-pub fn run_app() {
+pub fn run_gui() {
     // GUI feature is disabled; no-op at runtime.
 }

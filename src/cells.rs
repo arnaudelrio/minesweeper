@@ -58,7 +58,9 @@ impl Status {
 /// A single board cell.
 #[derive(Clone, Copy)]
 pub struct Cell {
+    /// The type of cell. Can be a [`CellType::Number`] or [`CellType::Bomb`].
     pub cell_type: CellType,
+    /// The status of the cell. Can be [`Status::Hidden`], [`Status::Flag`], [`Status::Question`], or [`Status::Revealed`].
     pub status: Status,
 }
 
@@ -119,13 +121,3 @@ impl Cell {
         self.cell_type.number()
     }
 }
-
-/*impl fmt::Debug for Cell {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.debug_struct("Cell")
-            .field("cell_type", &self.cell_type)
-            .field("status", &self.status)
-            .finish()
-    }
-}
-*/
