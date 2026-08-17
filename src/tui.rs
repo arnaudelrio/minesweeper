@@ -94,7 +94,7 @@ mod enabled {
                     lines.push(Spans::from(spans));
                 }
 
-                let board_block = Paragraph::new(lines).block(Block::default().borders(Borders::ALL).title("Mines (TUI)"));
+                let board_block = Paragraph::new(lines).block(Block::default().borders(Borders::ALL).title(" Mines (TUI) "));
                 f.render_widget(board_block, chunks[0]);
 
                 let info_text = if game_ended {

@@ -3,6 +3,14 @@ This is a simple minesweeper game written in Rust.
 
 It can be played in the terminal as a CLI, as a TUI or as a GUI inside a web browser.
 
+## Installation
+You can use this tool by compiling it from source. You can also download a pre-built binary from the [releases page](https://github.com/arnaudelrio/minesweeper/releases).
+
+It is also published at [crates.io](https://crates.io/crates/minesweeper_ctg), and you can install it via:
+```bash
+cargo install minesweeper_ctg
+```
+
 ## CLI
 To play the game in the terminal, run the following command:
 ```
@@ -21,6 +29,8 @@ cargo run -- tui
 ```
 
 The TUI version also supports the arguments detailed in the CLI version.
+
+![TUI](./images/TUI.png)
 
 ## GUI
 The GUI is built using the Yew framework. Therefore, it is recommended to use the `trunk` tool to build and run the GUI.
